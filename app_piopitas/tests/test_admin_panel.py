@@ -71,3 +71,76 @@ class EliminarProductoTests(TestCase):
         producto.refresh_from_db()
         self.assertTrue(Producto.objects.filter(id=producto.id).exists())
         self.assertFalse(producto.activo)
+
+
+class ActualizarStockTests(TestCase):
+
+    def setUp(self):
+        self.admin = crear_administrador()
+        self.client.force_login(self.admin)
+
+    def test_actualizar_stock_con_valor_valido_actualiza_el_producto(self):
+        # ARRANGE
+        producto = crear_producto(stock=10)
+        url = reverse('admin_producto_stock', args=[producto.id])
+
+        # ACT
+        self.client.post(url, {'stock': 25})
+
+        # ASSERT
+        producto.refresh_from_db()
+        self.assertEqual(producto.stock, 25)
+
+    def test_actualizar_stock_con_valor_negativo_no_modifica_el_producto(self):
+        # ARRANGE
+        producto = crear_producto(stock=10)
+        url = reverse('admin_producto_stock', args=[producto.id])
+
+        # ACT
+        self.client.post(url, {'stock': -5})
+
+        # ASSERT
+        producto.refresh_from_db()
+        self.assertEqual(producto.stock, 10)
+
+    def test_actualizar_stock_con_valor_no_numerico_no_modifica_el_producto(self):
+        # ARRANGE
+        producto = crear_producto(stock=10)
+        url = reverse('admin_producto_stock', args=[producto.id])
+
+        # ACT
+        self.client.post(url, {'stock': 'abc'})
+
+        # ASSERT
+        producto.refresh_from_db()
+        self.assertEqual(producto.stock, 10)
+
+    def test_actualizar_stock_no_modifica_otros_campos_del_producto(self):
+        # ARRANGE — solo el stock debe cambiar, nada más
+        producto = crear_producto(nombre='Limonada', precio=7500, stock=10, activo=True)
+        url = reverse('admin_producto_stock', args=[producto.id])
+
+        # ACT
+        self.client.post(url, {'stock': 40})
+
+        # ASSERT
+        producto.refresh_from_db()
+        self.assertEqual(producto.nombre, 'Limonada')
+        self.assertEqual(producto.precio, 7500)
+        self.assertTrue(producto.activo)
+
+    def test_usuario_cliente_no_puede_actualizar_stock(self):
+        # ARRANGE
+        self.client.logout()
+        cliente = crear_cliente()
+        self.client.force_login(cliente)
+        producto = crear_producto(stock=10)
+        url = reverse('admin_producto_stock', args=[producto.id])
+
+        # ACT
+        respuesta = self.client.post(url, {'stock': 999})
+
+        # ASSERT
+        producto.refresh_from_db()
+        self.assertEqual(respuesta.status_code, 302)
+        self.assertEqual(producto.stock, 10)

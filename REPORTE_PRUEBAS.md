@@ -3,19 +3,19 @@
 ## 1. Alcance
 
 Pruebas unitarias del backend (Django) del proyecto Piopitas: modelos, registro,
-inicio de sesión (cliente/administrador), creación de pedidos (descuento de stock)
-y recuperación de contraseña.
+inicio de sesión (cliente/administrador), creación de pedidos (descuento de stock),
+panel de administrador y recuperación de contraseña.
 
-Total de casos de prueba: **25**, distribuidos así:
+Total de casos de prueba: **42**, distribuidos así:
 
 | Archivo | Casos | Qué cubre |
 |---|---|---|
-| `test_models.py` | 8 | `Producto.disponible`, `Categoria.slug`, `Pedido.siguiente_estado`, `ItemPedido.subtotal` |
+| `test_models.py` | 14 | `Producto.disponible`, `Producto.estado_inventario` (Activo/Queda poco/No disponible/Inactivo), `Categoria.slug`, `Pedido.siguiente_estado`, `ItemPedido.subtotal` |
 | `test_registro.py` | 4 | Registro de clientes (válido, email/documento duplicado, contraseña débil) |
 | `test_login.py` | 5 | Login de cliente y administrador (válido, inválido, cruce de roles) |
 | `test_pedidos.py` | 6 | Creación de pedidos, descuento de stock, stock insuficiente, autenticación |
-| `test_admin_panel.py` | 5 | Control de acceso al panel, eliminar producto con/sin pedidos asociados |
-| `test_password_reset.py` | 2 | Envío de correo de recuperación (con mock), correo no registrado |
+| `test_admin_panel.py` | 10 | Control de acceso al panel, eliminar producto con/sin pedidos asociados, actualizar solo el stock (válido, negativo, no numérico, no toca otros campos, bloqueado para clientes) |
+| `test_password_reset.py` | 3 | Envío de correo de recuperación (con mock), correo no registrado, fallo de envío manejado sin caerse |
 
 ## 2. Cómo se ejecutaron
 
@@ -30,7 +30,7 @@ coverage html
 
 > ⚠️ Completar esta sección pegando la salida real de tu terminal después de correr
 > los comandos de arriba. Aquí va el resumen que imprime Django al final
-> (algo como `Ran 25 tests in 2.145s` y `OK`, o el detalle de qué falló).
+> (algo como `Ran 42 tests in 3.021s` y `OK`, o el detalle de qué falló).
 
 ```
 (pega aquí la salida de: coverage run manage.py test app_piopitas.tests -v 2)
@@ -48,7 +48,7 @@ coverage html
 |---|---|
 | `models.py` | Alto (toda la lógica de negocio tiene prueba directa) |
 | `forms.py` | Alto (validaciones de registro cubiertas) |
-| `views.py` | Medio-alto (login, registro, pedidos y panel admin cubiertos; algunas vistas de solo-lectura sin prueba propia) |
+| `views.py` | Medio-alto (login, registro, pedidos, panel admin y recuperación de contraseña cubiertos; algunas vistas de solo-lectura sin prueba propia) |
 
 ## 5. Registro de defectos encontrados durante el desarrollo
 
@@ -60,10 +60,11 @@ coverage html
 | DEF-04 | El carrito no afectaba la base de datos al pagar (solo mostraba una alerta) | `carrito.js` | Mayor | Se conectó a `POST /pedido/crear`, que descuenta stock en una transacción atómica |
 | DEF-05 | Ruta al CSS del admin rota (`administrador.cs` + `s` suelto) | `administrador_productos.html` | Menor | Se corrigió la ruta del `{% static %}` |
 | DEF-06 | Eliminar un producto con pedidos asociados rompería la base de datos (FK protegida) | `views.py` | Mayor | Se maneja `ProtectedError`: desactiva el producto en vez de borrarlo (cubierto por `test_eliminar_producto_con_pedidos_asociados...`) |
+| DEF-07 | Si el envío del correo de recuperación fallaba (ej. error de SMTP en producción), la página caía con error 500 en vez de avisar al usuario | `views.py` (recuperación de contraseña, detectado en el servidor desplegado en Render) | Crítica | Se creó `RecuperarContrasenaView`, que atrapa la excepción y redirige con un mensaje de error (cubierto por `test_error_al_enviar_correo_no_tumba_la_pagina`) |
 
 ## 6. Criterios de salida
 
-- [ ] 100% de los 25 casos de prueba pasan (`OK` en la salida de Django)
+- [ ] 100% de los 42 casos de prueba pasan (`OK` en la salida de Django)
 - [ ] Cobertura de `models.py`, `forms.py` y `views.py` revisada
 - [ ] Sin defectos críticos o mayores abiertos
 
