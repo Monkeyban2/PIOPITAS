@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--Font Family Titulos-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <!--Font Family textos generales-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Simbolos de Google-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!--Iconos oficiales-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inicio_sesion_cliente.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inicio_sesion_administrador.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'img/favicon.webp' %}"/>
+
+    <title>Piopitas</title>
+</head>
+<body>
+    <header class="header">
+        <input type="checkbox" class="header__checkbox" id="open-nav">
+        <label for="open-nav" class="material-symbols-outlined header__icon-open-nav">menu</label>
+        <div class="header__logo-container">
+            <img class="header__logo" src="{% static 'img/logo_piopitas.webp' %}" alt="PIOPITAS">
+        </div>
+        <nav class="header__nav">
+            <ul class="nav__list">
+                <li class="nav__item"><span class="material-symbols-outlined">home</span><a class="nav__link" href="..">Inicio</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">fork_spoon</span><a class="nav__link" href="menu">Menú</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">star</span><a class="nav__link" href="resenas">Reseñas</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">person</span><a class="nav__link" href="inicioS">Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="main__section-inicio-sesion">
+            <div class="main__container-text">
+                <p class="text-top">¡Bienvenido Administrador!</p>
+                <h2 class="text-title">Inicia Sesión</h2>
+                <p class="text-bottom">Accede al panel administrativo de piopitas y <span class="text-bottom-span">gestiona el restaurante.</span></p>
+            </div>
+
+            <div class="main__container-form">
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="mensaje-error">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <label class="email-label" for="email">Correo Electronico</label>
+                    <input id="email" class="email" type="email" name="username" required placeholder="ejemplo@ejemplo.com">
+
+                    <label class="contraseña-label" for="contraseña">Contraseña</label>
+                    <input id="contraseña" class="contraseña" type="password" name="password" required>
+
+                    <button class="iniciar-sesion-cliente iniciar-sesion-administrador" type="submit">Iniciar Sesion</button>
+                </form>
+
+                <div class="link-al-registro link-vuelta-cliente">
+                    <p>¿No eres administrador y entraste por error?</p>
+                    <a href="inicioS">Vuelve a iniciar sesión</a>
+                </div>
+                
+            </div>
+        </section>
+        
+    </main>
+
+
+    <footer class="footer">
+        <p class="footer__copyright">© 2026 Piopitas Restaurantes. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

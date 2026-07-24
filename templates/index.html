@@ -1,0 +1,225 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--Font Family Titulos-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <!--Font Family textos generales-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Simbolos de Google-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!--Iconos oficiales-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'img/favicon.webp' %}"/>
+
+    <title>Piopitas</title>
+</head>
+<body>
+    <header class="header">
+        <input type="checkbox" class="header__checkbox" id="open-nav">
+        <label for="open-nav" class="material-symbols-outlined header__icon-open-nav">menu</label>
+        <div class="header__logo-container">
+            <img class="header__logo" src="{% static 'img/logo_piopitas.webp' %}" alt="PIOPITAS">
+        </div>
+        <nav class="header__nav">
+            <ul class="nav__list">
+                <li class="nav__item"><span class="material-symbols-outlined">home</span><a class="nav__link" href="#">Inicio</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">fork_spoon</span><a class="nav__link" href="menu">Menú</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">star</span><a class="nav__link" href="resenas">Reseñas</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav__item"><span class="material-symbols-outlined">logout</span><a class="nav__link" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                {% else %}
+                <li class="nav__item"><span class="material-symbols-outlined">person</span><a class="nav__link" href="inicioS">Sesión</a></li>
+                {% endif %}
+                <!-- MOSTRAR CUANDO HAYA SESIÓN EN - TODOS - LOS - "HTML" -->
+            <!--
+            <li class="nav__item nav__item-user">
+
+                <span class="material-symbols-outlined">
+                    account_circle
+                </span>
+
+                <span class="nav__link nav__username">
+                    Samuel
+                </span>
+
+                <ul class="user-dropdown">
+                    <li>
+                        <a href="#">Cerrar sesión</a>
+                    </li>
+                </ul>
+
+            </li>
+
+            css:
+            .nav__item-user{
+                position: relative;
+                cursor: pointer;
+            }
+
+            .nav__username{
+                font-weight: 600;
+                user-select: none;
+            }
+
+            user-dropdown{
+                position: absolute;
+                top: calc(100% + 10px);
+                right: 0;
+                min-width: 160px;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,.15);
+                display: none;
+                overflow: hidden;
+                z-index: 1000;
+            }
+
+            .user-dropdown li{
+                width: 100%;
+            }
+
+            .user-dropdown a{
+                display: block;
+                padding: 12px 15px;
+                text-decoration: none;
+                color: #d32f2f;
+                font-weight: 600;
+            }
+
+            .user-dropdown a:hover{
+                background: #f5f5f5;
+            }
+
+            .nav__item-user:hover .user-dropdown{
+                display: block;
+            }
+            -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="section__image">
+            <div class="section__image-titulo">
+                <h1>¡Pide desde la mesa, nosotros hacemos el resto!</h1>
+            </div>
+            <div class="section__image-background"></div>
+        </section>
+
+        <section class="mini__menu">
+
+            <div class="mini__menu-titulo">
+                <h2>PLATOS DESTACADOS</h2>
+            </div>
+
+            <div class="mini__menu-productos">
+                <article class="producto-mini">
+                        <img src="{% static 'img_menu/entradas/alitas_bbq.webp' %}" alt="alitas">
+                        <h2>Alitas Picantes</h2>
+                        <p class="descripcion">12 Alitas de Pollo bañadas en salsa BBQ.</p>
+                        <p class="precio">$18.900</p>
+                    </article>
+
+                    <article class="producto-mini">
+                        <img src="{% static 'img_menu/entradas/empanadas_artesanales.webp' %}" alt="#">
+                        <h2>Empanadas Artesanales</h2>
+                        <p class="descripcion">6 Unidades de empanadas de pollo con ají</p>
+                        <p class="precio">$18.900</p>
+                    </article>
+
+                    <article class="producto-mini">
+                        <img src="{% static 'img_menu/hamburguesas/hamburguesa_doble_carne.webp' %}" alt="#">
+                        <h2>Hamburguesa Doble</h2>
+                        <p class="descripcion">Dos carnes de res, doble porción de queso cheddar, pepinillos y mostaza.</p>
+                        <p class="precio">$28.900</p>
+                    </article>
+
+                    <article class="producto-mini">
+                        <img src="{% static 'img_menu/platos_fuertes/pasta_carbonara.webp' %}" alt="#">
+                        <h2>Pasta a la Carbonara</h2>
+                        <p class="descripcion">Fetuccini con salsa  blanca, tocineta crujiente y queso parmesano.</p>
+                        <p class="precio">$21.900</p>
+                    </article>
+            </div>
+
+            <div class="mini__menu-link">
+                <p><a href="menu">VER MENÚ</a></p>
+            </div>
+
+        </section>
+        
+        <section class="section__sobre-nosotros">
+            <div class="sobre__nosotros">
+                <p class="sobre__nosotros-text-top">sobre nosotros</p>
+                <h2>pasión por el <span class="sobre__nosotros-title-span">sabor</span></h2>
+                <p class="sobre__nosotros-text-bottom">En Piopitas trabajamos cada dia para ofrecerte platos deliciosos, con ingredientes frecos y de la mejor calidad. Más que <span class="text__bottom-span">comida</span>, creamos <span class="text__bottom-span">experiencias</span>.</p>
+            </div>
+            <div class="ingredientes__frescos sobre-nosotros-container">
+                <span class="material-symbols-outlined sobre__nosotros-containers-span">eco</span>
+                <h3 class="sobre__nosotros-titles-containers">Ingredientes Frescos</h3>
+                <p>Seleccionamos lo mejor cada dia para ti.</p>
+            </div>
+            <div class="recetas__especiales sobre-nosotros-container">
+                <span class="material-symbols-outlined sobre__nosotros-containers-span">chef_hat</span>
+                <h3 class="sobre__nosotros-titles-containers">Recetas Especiales</h3>
+                <p>Nuestro toque único hace la diferencia.</p>
+            </div>
+            <div class="ambiente__agradable sobre-nosotros-container">
+                <span class="material-symbols-outlined sobre__nosotros-containers-span">group</span>
+                <h3 class="sobre__nosotros-titles-containers">Ambiente Agradable</h3>
+                <p>El lugar perfecto para compartir y disfrutar.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer__logo-container">
+            <img class="footer__logo" src="{% static 'img/logo_piopitas.webp' %}" alt="PIOPITAS">
+        </div>
+        <div class="footer__horarios-container">
+            <ul class="horarios__list">
+                <li class="horarios__item"><span class="horarios__span">Lunes:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Martes:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Miercoles:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Jueves:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Viernes:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Sabado:</span> 12:00 - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Domingo:</span>12:00 - 22:00</li>
+            </ul>
+        </div>
+        <div class="divisor"></div>
+        <div class="footer__redes-container">
+            <ul class="redes__list">
+                <li class="redes__item"><i class="fa-brands fa-youtube youtube"></i><a class="redes__link" href="">Youtube</a></li>
+                <li class="redes__item"><i class="fa-brands fa-instagram instagram"></i><a class="redes__link" href="https://www.instagram.com/piopitas_oficial/" target="_blank" rel="noopener">Instagram</a></li>
+                <li class="redes__item"><i class="fa-brands fa-facebook facebook"></i><a class="redes__link" href="https://www.facebook.com/profile.php?id=61591974143783" target="_blank" rel="noopener">Facebook</a></li>
+                <li class="redes__item"><i class="fa-brands fa-x-twitter twitter"></i><a class="redes__link" href="">Twitter</a></li>
+                <li class="redes__item"><i class="fa-brands fa-tiktok tiktok"></i><a class="redes__link" href="https://www.tiktok.com/@piopitas_oficial" target="_blank" rel="noopener">Tiktok</a></li>
+            </ul>
+        </div>
+        <div class="footer__datos-container">
+            <ul class="datos__list">
+                <li class="datos__item"><span class="datos__span">📍</span>Calle 100 #01-23</li>
+                <li class="datos__item"><span class="datos__span">📞</span>+57 301 2345678</li>
+                <li class="datos__item cliente-com"><span class="datos__span">✉️</span>servicioalcliente@piopitas.com</li>
+                <li class="datos__item"><span class="datos__span">🌎</span>Bogotá, Colombia</li>
+                <li class="datos__item"><a class="datos__link" href="termCond" target="_blank">Terminos y condiciones</a></li>
+            </ul>
+        </div>
+        <p class="footer__copyright">© 2026 Piopitas Restaurantes. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

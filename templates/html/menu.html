@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'img/favicon.webp' %}"/>
+
+    <title>Piopitas</title>
+</head>
+    <header class="header">
+        <input type="checkbox" class="header__checkbox" id="open-nav">
+        <label for="open-nav" class="material-symbols-outlined header__icon-open-nav">menu</label>
+        <div class="header__logo-container">
+            <img class="header__logo" src="{% static 'img/logo_piopitas.webp' %}" alt="PIOPITAS">
+        </div>
+        <nav class="header__nav">
+            <ul class="nav__list">
+                <li class="nav__item"><span class="material-symbols-outlined">home</span><a class="nav__link" href="..">Inicio</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">fork_spoon</span><a class="nav__link" href="#">Menú</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">star</span><a class="nav__link" href="resenas">Reseñas</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav__item"><span class="material-symbols-outlined">logout</span><a class="nav__link" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                {% else %}
+                <li class="nav__item"><span class="material-symbols-outlined">person</span><a class="nav__link" href="inicioS">Sesión</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+<body>
+    
+    <main>
+
+        <section class="menu">
+
+            <div class="menu__title">
+                <h2 class="title">nuestro menú</h2>
+                <p class="text__1">Cada plato está hecho para <span class="text-span">conquistar</span> tu antojo.</p>
+                <p class="text__2">Elige una categoria y encuentra tu próxima <span class="text-span">tentación.</span></p>
+            </div>
+
+            <nav class="menu__nav">
+
+                <ul class="menu__list">
+
+                    <li class="menu__item"><button id="entradas" class="menu__item-boton">Entradas</button></li>
+                    <li class="menu__item"><button id="hamburguesas" class="menu__item-boton">Hamburguesas</button></li>
+                    <li class="menu__item"><button id="platos_fuertes" class="menu__item-boton">Platos Fuertes</button></li>
+                    <li class="menu__item"><button id="ensaladas" class="menu__item-boton">Ensaladas</button></li>
+                    <li class="menu__item"><button id="bebidas_postres" class="menu__item-boton largo">Bebidas y Postres</button></li>
+
+                </ul>
+                
+            </nav>
+
+            <div class="menu__contenido">
+
+                {% for categoria in categorias %}
+                <section class="{{ categoria.slug }}">
+
+                    {% for producto in categoria.productos.all %}
+                    <article>
+                        {% if producto.imagen %}
+                        <img src="{% static producto.imagen %}" alt="{{ producto.nombre }}">
+                        {% endif %}
+                        <h2>{{ producto.nombre }}</h2>
+                        <p class="descripcion">{{ producto.descripcion }}</p>
+                        <p class="precio">{{ producto.precio_formateado }}</p>
+                        {% if producto.disponible %}
+                        <button class="añadir_carrito"
+                        data-id="{{ producto.id }}"
+                        data-nombre="{{ producto.nombre|slugify }}"
+                        data-precio="{{ producto.precio|stringformat:'d' }}">Añadir al Carrito</button>
+                        {% else %}
+                        <button class="añadir_carrito" disabled>Agotado</button>
+                        {% endif %}
+                    </article>
+                    {% endfor %}
+
+                </section>
+                {% endfor %}
+
+            </div>
+
+
+
+            <section class="carrito" id="carrito"
+                data-csrf="{{ csrf_token }}"
+                data-logueado="{% if user.is_authenticated %}1{% else %}0{% endif %}"
+                data-url-pedido="{% url 'crear_pedido' %}"
+                data-url-login="{% url 'inicioS' %}">
+
+                <h2 class="carrito__titulo">Carrito de compras</h2>
+
+                <div id="carrito-contenido" class="carrito__contenido">
+
+                    <p class="carrito__vacio">Tu carrito está vacío.</p>
+
+                </div>
+
+                <div class="carrito__resumen">
+
+                    <div class="carrito__total">
+                        Total: $0
+                    </div>
+
+                    <button class="carrito__checkout">
+                        Proceder al pago
+                    </button>
+
+                </div>
+
+        </section>
+
+        </section>
+
+    </main>
+    <footer class="footer">
+        <p class="footer__copyright">© 2026 Piopitas Restaurantes. Todos los derechos reservados.</p>
+    </footer>
+    <script src="{% static 'js/carrito.js' %}"></script>

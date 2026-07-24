@@ -1,0 +1,25 @@
+@media screen and (min-width:250px){
+    .main__container-form{
+    margin-top: 80px;
+}
+}
+@media screen and (min-width:375px){
+    .main__container-form{
+    margin-top: 50px;
+}
+}
+@media screen and (min-width:437px){
+    .main__container-form{
+    margin-top: 20px;
+}
+}
+@media screen and (min-width:485px){
+    .main__container-form{
+    margin-top: 0px;
+}
+}
+@media screen and (min-width:900px){
+    .main__container-form{
+    margin-top: 60px;
+}
+}

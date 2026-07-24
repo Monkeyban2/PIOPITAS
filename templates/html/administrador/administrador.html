@@ -1,0 +1,145 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Font Family Titulos-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <!--Font Family textos generales-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Simbolos de Google-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!--Iconos oficiales-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/administrador/administrador.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'img/favicon.webp' %}"/>
+
+    <title>Piopitas</title>
+</head>
+<body>
+
+    <aside>
+
+        <div class="logo">
+            <h2>Piopitas</h2>
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+                    <a href="#">
+                        <span class="material-symbols-outlined">
+                            home
+                        </span>
+
+                        Inicio
+                    </a>
+                </li>
+
+                <li>
+                    <a href="pro">
+                        <span class="material-symbols-outlined">
+                            restaurant_menu
+                        </span>
+
+                        Productos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="ped">
+                        <span class="material-symbols-outlined">
+                            receipt_long
+                        </span>
+
+                        Pedidos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+
+                        Cerrar sesión
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <main>
+
+        <section class="bienvenida">
+
+            <h1>Panel Administrativo</h1>
+
+            <p>Bienvenido, administrador.</p>
+
+        </section>
+
+        <section class="estadisticas">
+
+            <article>
+
+                <span class="material-symbols-outlined">
+                    receipt_long
+                </span>
+
+                <h2>Pedidos pendientes</h2>
+
+                <p>{{ pedidos_pendientes }}</p>
+
+            </article>
+
+            <article>
+
+                <span class="material-symbols-outlined">
+                    restaurant_menu
+                </span>
+
+                <h2>Productos registrados</h2>
+
+                <p>{{ productos_registrados }}</p>
+
+            </article>
+
+        </section>
+
+        <section class="pedidos-recientes">
+
+            <h2>Pedidos recientes</h2>
+
+            <ul>
+
+                {% for pedido in pedidos_recientes %}
+                <li>
+                    <span>Pedido #{{ pedido.id }} - {{ pedido.cliente.first_name|default:pedido.cliente.username }}</span>
+
+                    <span>{{ pedido.get_estado_display }}</span>
+                </li>
+                {% empty %}
+                <li><span>Todavía no hay pedidos registrados.</span></li>
+                {% endfor %}
+
+            </ul>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

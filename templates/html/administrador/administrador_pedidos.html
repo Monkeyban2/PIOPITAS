@@ -1,0 +1,160 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Font Family Titulos-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <!--Font Family textos generales-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Simbolos de Google-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!--Iconos oficiales-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/administrador/administrador.css' %}">
+    <link rel="stylesheet" href="{% static 'css/administrador/administrador_pedidos.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'img/favicon.webp' %}"/>
+
+    <title>Piopitas</title>
+</head>
+<body>
+    <aside>
+
+        <div class="logo">
+            <h2>Piopitas</h2>
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+                    <a href="{% url 'admin_panel' %}">
+                        <span class="material-symbols-outlined">
+                            home
+                        </span>
+
+                        Inicio
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'admin_productos' %}">
+                        <span class="material-symbols-outlined">
+                            restaurant_menu
+                        </span>
+
+                        Productos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'admin_pedidos' %}">
+                        <span class="material-symbols-outlined">
+                            receipt_long
+                        </span>
+
+                        Pedidos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+
+                        Cerrar sesión
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+    <main>
+
+    <section class="encabezado">
+
+        <h1>
+            Gestión de pedidos
+        </h1>
+
+    </section>
+
+    <section class="tabla">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Pedido</th>
+
+                    <th>Cliente</th>
+
+                    <th>Estado</th>
+
+                    <th>Acción</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for pedido in pedidos %}
+                <tr>
+
+                    <td>
+                        #{{ pedido.id }}
+                        <br>
+                        <small>
+                            {% for item in pedido.items.all %}
+                                {{ item.cantidad }}x {{ item.producto.nombre }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </small>
+                        <br>
+                        <small>Total: {{ pedido.total }}</small>
+                    </td>
+
+                    <td>{{ pedido.cliente.first_name|default:pedido.cliente.username }}</td>
+
+                    <td>{{ pedido.get_estado_display }}</td>
+
+                    <td>
+                        {% if pedido.texto_accion %}
+                        <form method="POST" action="{% url 'admin_pedido_avanzar' pedido.id %}">
+                            {% csrf_token %}
+                            <button type="submit">
+                                {{ pedido.texto_accion }}
+                            </button>
+                        </form>
+                        {% else %}
+                            &mdash;
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">Todavía no hay pedidos.</td></tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+</body>
+</html>

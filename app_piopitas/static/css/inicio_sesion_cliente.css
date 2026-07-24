@@ -1,0 +1,238 @@
+:root{
+    /* FUENTES */
+    --font-title: 'Playfair Display';
+    --font-text: 'Montserrat';
+    /* COLORES */
+    --bg__header-footer: #F2E7E6;
+    --texto-oscuro: #2A140D;
+    --texto-claro: #B1B2AB;
+    --bg-claro: #F4F1EE44;
+    --dorado-elegante: #C89B3C;
+}
+/*INICIO SESION CLIENTE START*/
+.main__section-inicio-sesion{
+    min-height: 100dvh;
+    justify-items: center;
+}
+.main__container-text{
+    margin-top: 30px;
+    height: 30dvh;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.text-top{
+    color: #A32A07;
+    font-weight: 700;
+    margin-left: 20px;
+}
+.text-title{
+    color: var(--texto-oscuro);
+    text-align: center;
+    letter-spacing: 1.4px;
+    font-size: 1.9rem;
+}
+.text-bottom{
+    color: var(--texto-oscuro);
+}
+.text-bottom-span{
+    font-weight: 600;
+    color: #A32A07;
+    font-style: italic;
+}
+input:not(.checkbox-tyt),button{
+    width: 100%;
+}
+.main__container-form{
+    margin-top: 10px;
+}
+.email{
+    margin-bottom: 15px;
+}
+.email,.contraseña:focu {
+    outline: none;
+}
+.email-label, .contraseña-label{
+    font-size: .8rem;
+    color: var(--texto-oscuro);
+    margin-left: 5px;
+}
+.email, .contraseña{
+    color: var(--texto-oscuro);
+    margin-top: 5px;
+    padding: 7px;
+    border: none;
+    border-radius: 4px;
+}
+.contraseña{
+    margin-bottom: 20px;
+}
+.recuperacion-contraseña-text{
+    font-size: .7rem;
+    min-width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.recuperacion-contraseña{
+    text-decoration: none;
+}
+.iniciar-sesion-cliente{
+    color: var(--texto-oscuro);
+    padding: 6px;
+    border: none;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: .7rem;
+}
+.posicion-inicio-sesion-google{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    justify-content: start;
+}
+.inicio-sesion-google-text{
+    text-align: start;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: .8rem;
+}
+.posicion-inicio-sesion-google a{
+    text-decoration: none;
+}
+.links{
+    margin: 45px 0 40px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+.link-al-registro,.link-al-inicio-sesion-administrador{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.link-al-registro,.link-al-inicio-sesion-administrador > p{
+    font-size: 11px;
+    text-wrap: pretty;
+}
+.link-al-registro,.link-al-inicio-sesion-administrador > a{
+    font-size: .8rem;
+    text-align: center;
+    text-decoration: none;
+}
+.link-al-registro a{
+    text-decoration: none;
+}
+@media screen and (min-width:400px){
+    .posicion-inicio-sesion-google{
+        justify-content: center;
+    }
+    .checkbox-tyt{
+        width: auto;
+    }
+    .main__container-text{
+        max-height: 200px;
+    }
+}
+@media screen and (min-width:500px){
+    .tyt-recuperacion-posicion{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .checkbox-tyt{
+        width: auto;
+    }
+    .tyt-label{
+        min-width: auto;
+    }
+
+    .recuperacion-contraseña-text{
+        min-width: auto;
+    }
+    .posicion-tyt{
+        gap: 10px;
+    }
+    .links{
+        justify-content: space-evenly;
+    }
+}
+@media screen and (min-width:750px){
+    .text-bottom{
+        text-align: center;
+    }
+}
+@media screen and (min-width:900px){
+    .text-top{
+        margin-left: 50px;
+        font-size: 1rem;
+    }
+    .text-title{
+        font-size: 2.9rem;
+    }
+    .text-bottom{
+        font-size: 1.3rem;
+    }
+    .main__container-form{
+        margin-top: 30px;
+    }
+    .email-label, .contraseña-label{
+        font-size: .9rem;
+    }
+    .email,.contraseña{
+        margin-top: 7px;
+    }
+    .iniciar-sesion-cliente{
+        font-size: .9rem;
+    }
+    .tyt-label,.recuperacion-contraseña-text{
+        font-size: .8rem;
+    }
+    .link-al-registro,.link-al-inicio-sesion-administrador > p{
+        font-size: .9rem;
+    }
+    .link-al-registro,.link-al-inicio-sesion-administrador > a{
+        font-size: .9rem;
+    }
+}
+@media screen and (min-width:1000px){
+    .main__container-form{
+        margin-top: 0;
+        max-width: 70%;
+    }
+    .email-label, .contraseña-label{
+        font-size: 1.2rem;
+    }
+    .main__container-text{
+        margin-bottom: 30px;
+    }
+    .contraseña,.email,.iniciar-sesion-cliente{
+        font-size: 1.1rem;
+    }
+    .inicio-sesion-google-text,.sesion-google-link{
+        font-size: 1rem;
+    }
+}
+@media screen and (min-width:1200px){
+    .tyt-label,.recuperacion-contraseña-text{
+        font-size: 1.1rem;
+    }
+    .link-al-registro,.link-al-inicio-sesion-administrador > p{
+        font-size: 1.2rem;
+    }
+    .link-al-registro,.link-al-inicio-sesion-administrador > a{
+        font-size: 1.2rem;
+    }
+    .contraseña,.email,.iniciar-sesion-cliente{
+        font-size: 1.1rem;
+    }
+    .inicio-sesion-google-text,.sesion-google-link{
+        font-size: 1.1rem;
+    }
+
+}
+/*INICIO SESION CLIENTE END*/

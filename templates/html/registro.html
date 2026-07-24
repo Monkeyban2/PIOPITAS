@@ -1,0 +1,144 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--Font Family Titulos-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <!--Font Family textos generales-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Simbolos de Google-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!--Iconos oficiales-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inicio_sesion_cliente.css' %}">
+    <link rel="stylesheet" href="{% static 'css/registro.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'img/favicon.webp' %}"/>
+
+    <title>Piopitas</title>
+</head>
+<body>
+    <header class="header">
+        <input type="checkbox" class="header__checkbox" id="open-nav">
+        <label for="open-nav" class="material-symbols-outlined header__icon-open-nav">menu</label>
+        <div class="header__logo-container">
+            <img class="header__logo" src="{% static 'img/logo_piopitas.webp' %}" alt="PIOPITAS">
+        </div>
+        <nav class="header__nav">
+            <ul class="nav__list">
+                <li class="nav__item"><span class="material-symbols-outlined">home</span><a class="nav__link" href="..">Inicio</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">fork_spoon</span><a class="nav__link" href="menu">Menú</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">star</span><a class="nav__link" href="resenas">Reseñas</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">person</span><a class="nav__link" href="inicioS">Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="main__section-inicio-sesion">
+            <div class="main__container-text">
+                <p class="text-top">¡Bienvenido a Piopitas!</p>
+                <h2 class="text-title">Registro de Cliente</h2>
+                <p class="text-bottom">Completa el formulario para formar parte de nuestras <span class="text-bottom-span">familia.</span></p>
+            </div>
+            <div class="main__section-form">
+
+                {% if form.errors %}
+                    <ul class="mensaje-error">
+                        {% for campo in form %}
+                            {% for error in campo.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                <form class="registro__form" method="POST" action="">
+                    {% csrf_token %}
+
+                    <label class="form__label" for="tipo_doc">Tipo de documento
+                        <select class="tipo_doc" name="tipo_doc" id="tipo_doc">
+                            <option selected disabled value="">Nacional o Extranjero</option>
+                            <option value="T.I">Tarjeta Identidad</option>
+                            <option value="C.C">Cédula de Ciudadanía</option>
+                            <option value="C.E">Cédula de Extranjería</option>
+                            <option value="P.A">Pasaporte</option>
+                        </select>
+                    </label>
+
+                    <label class="form__label" for="num_doc">Número de Documento
+                        <input class="num_doc" id="num_doc" name="num_doc" type="number" required>
+                    </label>
+
+                    <label class="form__label" for="nombres">Nombres
+                        <input class="nombres" id="nombres" name="nombres" type="text" placeholder="Jhon Doe" required minlength="3">
+                    </label>
+
+                    <label class="form__label" for="apellidos">Apellidos
+                        <input class="apellidos" id="apellidos" name="apellidos" type="text" placeholder="Ramírez Salazar" required minlength="3">
+                    </label>
+
+                    <label class="form__label" for="email">Email
+                        <input class="email" id="email" name="email" type="email" required >
+                    </label>
+
+                    <label class="form__label" for="contraseña">Contraseña
+                        <input class="contraseña" id="contraseña" name="password" type="password" required minlength="8">
+                    </label>
+
+                    <div class="posicion-tyt">
+                        <label class="tyt-label" for="tyt">Acepto <a href="termCond" target="_blank">terminos y condiciones </a></label>
+                        <input class="checkbox-tyt" id="tyt" type="checkbox" required>
+                    </div>
+
+                    <button class="boton__registro" type="submit">ENVIAR</button>
+
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer__logo-container">
+            <img class="footer__logo" src="{% static 'img/logo_piopitas.webp' %}" alt="PIOPITAS">
+        </div>
+        <div class="footer__horarios-container">
+            <ul class="horarios__list">
+                <li class="horarios__item"><span class="horarios__span">Lunes:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Martes:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Miercoles:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Jueves:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Viernes:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Sabado:</span> 12:00 - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Domingo:</span>12:00 - 22:00</li>
+            </ul>
+        </div>
+        <div class="divisor"></div>
+        <div class="footer__redes-container">
+            <ul class="redes__list">
+                <li class="redes__item"><i class="fa-brands fa-youtube youtube"></i><a class="redes__link" href="">Youtube</a></li>
+                <li class="redes__item"><i class="fa-brands fa-instagram instagram"></i><a class="redes__link" href="https://www.instagram.com/piopitas_oficial/" target="_blank" rel="noopener">Instagram</a></li>
+                <li class="redes__item"><i class="fa-brands fa-facebook facebook"></i><a class="redes__link" href="https://www.facebook.com/profile.php?id=61591974143783" target="_blank" rel="noopener">Facebook</a></li>
+                <li class="redes__item"><i class="fa-brands fa-x-twitter twitter"></i><a class="redes__link" href="">Twitter</a></li>
+                <li class="redes__item"><i class="fa-brands fa-tiktok tiktok"></i><a class="redes__link" href="https://www.tiktok.com/@piopitas_oficial" target="_blank" rel="noopener">Tiktok</a></li>
+            </ul>
+        </div>
+        <div class="footer__datos-container">
+            <ul class="datos__list">
+                <li class="datos__item"><span class="datos__span">📍</span>Calle 100 #01-23</li>
+                <li class="datos__item"><span class="datos__span">📞</span>+57 301 2345678</li>
+                <li class="datos__item cliente-com"><span class="datos__span">✉️</span>servicioalcliente@piopitas.com</li>
+                <li class="datos__item"><span class="datos__span">🌎</span>Bogotá, Colombia</li>
+                <li class="datos__item"><a class="datos__link" href="termCond" target="_blank">Terminos y condiciones</a></li>
+            </ul>
+        </div>
+        <p class="footer__copyright">© 2026 Piopitas Restaurantes. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,196 @@
+:root{
+    /* FUENTES */
+    --font-title: 'Playfair Display';
+    --font-text: 'Montserrat';
+    /* COLORES */
+    --bg__header-footer: #F2E7E6;
+    --texto-oscuro: #2A140D;
+    --texto-claro: #B1B2AB;
+    --bg-claro: #F4F1EE44;
+    --dorado-elegante: #C89B3C;
+}
+/*RESEÑAS START*/
+.reseñas__title, .faq__title{
+    font-size: 1.1rem;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 40px 0;
+}
+.reseñas__container-posicion{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.reseñas__container{
+    outline: 2px solid #000;
+}
+.reseñas__container-posicion-interior-top{
+    padding: 7px;
+    border-bottom: 1px solid #000;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.reseñas__container-posicion-interior-bottom{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.top-left{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+.reseñas__logo{
+    max-width: 30px;
+    max-height: 20px;
+    margin-left: 5px;
+}
+.reseñas__valoracion{
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+.span__text-symbol{
+    color: gold;
+    font-size: 1.2rem;
+}
+.reseñas__critica{
+    max-width: 90%;
+    text-align: center;
+    text-wrap: pretty;
+}
+/*RESEÑAS END*/
+
+/*FAQ START*/
+.faq__title{
+    margin-bottom: 20px;
+}
+.faq__container-posicion{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 15px;
+    gap: 15px;
+}
+.faq__1,.faq__2{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+summary{
+    width: 100%;
+    user-select: none;
+    position: relative;
+    padding: 10px;
+    background-color: #fff;
+}
+summary::marker {
+    content: '';
+}
+summary::before {
+    content: '+';
+    color: #000;
+    position: absolute;
+    right: 5px;
+    font-weight: 900;
+}
+details[open]  summary::before{
+    content: '-';
+    font-size: 1.3rem;
+}
+.content{
+    border-top: 1px solid #000;
+    padding: 10px;
+    font-size: .9rem;
+    text-align: center;
+    background-color: #48e;
+}
+/*FAQ END*/
+.footer{
+    margin-top: 100px;
+}
+/*RESPONSIVE START*/
+@media screen and (min-width:700px){
+    .reseñas__container-posicion-interior-bottom{
+        padding: 30px;
+    }
+    .reseñas__title, .faq__title{
+        font-size: 1.4rem;
+    }
+    summary{
+        font-size: 1.1rem;
+    }
+    .content{
+        font-size: 1rem;
+    }
+}
+@media screen and (min-width:900px){
+    .reseñas__title, .faq__title{
+        font-size: 1.7rem;
+    }
+    .reseñas__critica{
+        font-size: 1.2rem;
+    }
+    summary{
+        font-size: 1.3rem;
+    }
+    .content{
+        font-size: 1.2rem;
+    }
+}
+@media screen and (min-width:1300px){
+    .reseñas__container-posicion-interior-top{
+        font-size: 1.2rem;
+    }
+    .reseñas__container-posicion{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    .espacio-2{
+        grid-column: span 2;
+    }
+    .espacio-2-b{
+        padding-top: 40px;
+    }
+    .reseñas__critica{
+        font-size: 1.3rem;
+    }
+    .content{
+        font-size: 1.3rem;
+    }
+    summary::before{
+        right: 15px;
+    }
+    .faq__1 > details > summary > b{
+        margin-left: 15px;
+    }
+    .faq__2 > details > summary > b{
+        margin-left: 15px;
+    }
+}
+@media screen and (min-width:1500px){
+    .faq__container-posicion{
+        flex-direction: row;
+        gap: 20px;
+    }
+    .faq__1, .faq__2{
+        gap: 30px;
+    }
+    summary{
+        padding: 16px;
+    }
+    main{
+        height: 140dvh;
+    }
+    .faq__title, .reseñas__title{
+        margin: 80px 0;
+    }
+    footer{
+        margin-top: 0;
+    }
+}

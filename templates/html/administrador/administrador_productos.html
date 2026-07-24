@@ -1,0 +1,183 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Font Family Titulos-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <!--Font Family textos generales-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Simbolos de Google-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!--Iconos oficiales-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/administrador/administrador.css' %}">
+    <link rel="stylesheet" href="{% static 'css/administrador/administrador_productos.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'img/favicon.webp' %}"/>
+
+    <title>Piopitas</title>
+</head>
+<body>
+    <aside>
+
+        <div class="logo">
+            <h2>Piopitas</h2>
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+                    <a href="{% url 'admin_panel' %}">
+                        <span class="material-symbols-outlined">
+                            home
+                        </span>
+
+                        Inicio
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'admin_productos' %}">
+                        <span class="material-symbols-outlined">
+                            restaurant_menu
+                        </span>
+
+                        Productos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'admin_pedidos' %}">
+                        <span class="material-symbols-outlined">
+                            receipt_long
+                        </span>
+
+                        Pedidos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'logout' %}">
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+
+                        Cerrar sesión
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+    <main>
+
+    <section class="encabezado">
+
+        <h1>Gestión de productos</h1>
+
+    </section>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="mensaje-error">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <section class="formulario-producto">
+
+        <h2>Crear producto</h2>
+
+        <form method="POST" action="{% url 'admin_productos' %}">
+            {% csrf_token %}
+
+            {% for campo in form %}
+                <label>{{ campo.label }}
+                    {{ campo }}
+                    {% for error in campo.errors %}<span class="mensaje-error">{{ error }}</span>{% endfor %}
+                </label>
+            {% endfor %}
+
+            <button type="submit">Crear producto</button>
+        </form>
+
+    </section>
+
+    <section class="tabla">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Producto</th>
+
+                    <th>Categoría</th>
+
+                    <th>Precio</th>
+
+                    <th>Stock</th>
+
+                    <th>Estado</th>
+
+                    <th>Acciones</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for producto in productos %}
+                <tr>
+
+                    <td>{{ producto.nombre }}</td>
+
+                    <td>{{ producto.categoria.nombre }}</td>
+
+                    <td>{{ producto.precio_formateado }}</td>
+
+                    <td>
+                        <form method="POST" action="{% url 'admin_producto_stock' producto.id %}" class="form-stock">
+                            {% csrf_token %}
+                            <input type="number" name="stock" min="0" value="{{ producto.stock }}">
+                            <button type="submit">Guardar</button>
+                        </form>
+                    </td>
+
+                    <td><span class="badge {{ producto.estado_inventario_clase }}">{{ producto.estado_inventario }}</span></td>
+
+                    <td>
+
+                        <form method="POST" action="{% url 'admin_producto_eliminar' producto.id %}" style="display:inline">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('¿Eliminar {{ producto.nombre }}?');">Eliminar</button>
+                        </form>
+
+                    </td>
+
+                </tr>
+                {% empty %}
+                <tr><td colspan="6">Todavía no hay productos registrados.</td></tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,205 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--Font Family Titulos-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <!--Font Family textos generales-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!--Simbolos de Google-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!--Iconos oficiales-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+    <link rel="stylesheet" href="{% static 'css/reseñas.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'img/favicon.webp' %}"/>
+
+    <title>Piopitas</title>
+</head>
+<body>
+    <header class="header">
+        <input type="checkbox" class="header__checkbox" id="open-nav">
+        <label for="open-nav" class="material-symbols-outlined header__icon-open-nav">menu</label>
+        <div class="header__logo-container">
+            <img class="header__logo" src="{% static 'img/logo_piopitas.webp' %}" alt="PIOPITAS">
+        </div>
+        <nav class="header__nav">
+            <ul class="nav__list">
+                <li class="nav__item"><span class="material-symbols-outlined">home</span><a class="nav__link" href="..">Inicio</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">fork_spoon</span><a class="nav__link" href="menu">Menú</a></li>
+                <li class="nav__item"><span class="material-symbols-outlined">star</span><a class="nav__link" href="#">Reseñas</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav__item"><span class="material-symbols-outlined">logout</span><a class="nav__link" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                {% else %}
+                <li class="nav__item"><span class="material-symbols-outlined">person</span><a class="nav__link" href="inicioS">Sesión</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="main__section-reseñas-faq">
+
+            <h2 class="reseñas__title">Reseñas de nuestros clientes</h2>
+
+            <div class="reseñas__container-posicion">
+
+                <div class="reseñas__container">
+                    <div class="reseñas__container-posicion-interior-top">
+                        <div class="top-left">
+                            <img class="reseñas__logo" src="{% static 'img/María.svg' %}">
+                            <p class="reseñas__nombre-cliente">María G.</p>
+                        </div>
+                        <div class="top-right">
+                            <span class="reseñas__valoracion"><p class="material-symbols-outlined span__text-symbol">star</p>4.2</span>
+                        </div>
+                    </div>
+                    <div class="reseñas__container-posicion-interior-bottom">
+                        <p class="reseñas__critica">Los productos son muy ricos y la atención fue buena. Me hubiera gustado encontrar una mayor variedad de opciones ese día, pero en general quedé satisfecha con la compra.</p>
+                    </div>
+
+                </div>
+                
+                <div class="reseñas__container">
+                    <div class="reseñas__container-posicion-interior-top">
+                        <div class="top-left">
+                            <img class="reseñas__logo"  src="{% static 'img/Carlos.svg' %}">
+                            <p class="reseñas__nombre-cliente">Carlos R.</p>
+                        </div>
+                        <div class="top-right">
+                            <span class="reseñas__valoracion"><p class="material-symbols-outlined span__text-symbol">star</p>4.7</span>
+                        </div>
+                    </div>
+                    <div class="reseñas__container-posicion-interior-bottom">
+                        <p class="reseñas__critica">Probé Piopitas por recomendación de una amiga y superó mis expectativas. Tienen un sabor delicioso y se nota el cuidado en cada detalle. Sin duda volveré a comprar.</p>
+                    </div>
+                </div>
+
+                <div class="reseñas__container espacio-2">
+                    <div class="reseñas__container-posicion-interior-top">
+                        <div class="top-left">
+                            <img class="reseñas__logo"  src="{% static 'img/Ana_Paulina.svg' %}">
+                            <p class="reseñas__nombre-cliente">Ana P.</p>
+                        </div>
+                        <div class="top-right">
+                            <span class="reseñas__valoracion"><p class="material-symbols-outlined span__text-symbol">star</p>4.4</span>
+                        </div>
+                    </div>
+                    <div class="reseñas__container-posicion-interior-bottom espacio-2-b">
+                        <p class="reseñas__critica">Las Piopitas tienen muy buen sabor y una textura excelente. Son una opción diferente y de buena calidad. Aunque esperaba porciones un poco más grandes, volvería a recomendarlas sin problema.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <h2 class="faq__title">Preguntas frecuentes</h2>
+
+            <div class="faq__container-posicion">
+
+                <div class="faq__1">
+                    <details>
+                        <summary>
+                            <b>01</b> - ¿Realizan domicilios?
+                        </summary>
+                        <div class="content">
+                            No. Actualmente las compras y entregas se realizan únicamente en nuestra sede ubicada en Calle 100 #01-23.
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>
+                            <b>02</b> - ¿Qué métodos de pago aceptan?
+                        </summary>
+                        <div class="content">
+                            Aceptamos unicamente pagos virtuales a través de los medios habilitados al solicitar tu pedido en la página.
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>
+                            <b>03</b> - ¿Tienen más de una sede?
+                        </summary>
+                        <div class="content">
+                            No. Actualmente contamos con una única sede donde atendemos a nuestros clientes.
+                        </div>
+                    </details>
+                </div>
+
+                <div class="faq__2">
+                    <details>
+                        <summary>
+                            <b>04</b> - ¿Cómo puedo comunicarme con Piopitas?
+                        </summary>
+                        <div class="content">
+                            Puedes escribirnos a través de nuestros canales oficiales y redes sociales. Estaremos encantados de ayudarte.
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>
+                            <b>05</b> - ¿Cuál es el horario de atención?
+                        </summary>
+                        <div class="content">
+                            Nuestro horario de atención se encuentra publicado en esta página y en nuestras redes sociales oficiales.
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>
+                            <b>06</b> - ¿Los productos se preparan diariamente?
+                        </summary>
+                        <div class="content">
+                            Trabajamos para ofrecer productos frescos y mantener nuestros estándares de calidad.
+                        </div>
+                    </details>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer__logo-container">
+            <img class="footer__logo" src="{% static 'img/logo_piopitas.webp' %}" alt="PIOPITAS">
+        </div>
+        <div class="footer__horarios-container">
+            <ul class="horarios__list">
+                <li class="horarios__item"><span class="horarios__span">Lunes:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Martes:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Miercoles:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Jueves:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Viernes:</span>11:00  - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Sabado:</span> 12:00 - 20:00</li>
+                <li class="horarios__item"><span class="horarios__span">Domingo:</span>12:00 - 22:00</li>
+            </ul>
+        </div>
+        <div class="divisor"></div>
+        <div class="footer__redes-container">
+            <ul class="redes__list">
+                <li class="redes__item"><i class="fa-brands fa-youtube youtube"></i><a class="redes__link" href="">Youtube</a></li>
+                <li class="redes__item"><i class="fa-brands fa-instagram instagram"></i><a class="redes__link" href="https://www.instagram.com/piopitas_oficial/" target="_blank" rel="noopener">Instagram</a></li>
+                <li class="redes__item"><i class="fa-brands fa-facebook facebook"></i><a class="redes__link" href="https://www.facebook.com/profile.php?id=61591974143783" target="_blank" rel="noopener">Facebook</a></li>
+                <li class="redes__item"><i class="fa-brands fa-x-twitter twitter"></i><a class="redes__link" href="">Twitter</a></li>
+                <li class="redes__item"><i class="fa-brands fa-tiktok tiktok"></i><a class="redes__link" href="https://www.tiktok.com/@piopitas_oficial" target="_blank" rel="noopener">Tiktok</a></li>
+            </ul>
+        </div>
+        <div class="footer__datos-container">
+            <ul class="datos__list">
+                <li class="datos__item"><span class="datos__span">📍</span>Calle 100 #01-23</li>
+                <li class="datos__item"><span class="datos__span">📞</span>+57 301 2345678</li>
+                <li class="datos__item cliente-com"><span class="datos__span">✉️</span>servicioalcliente@piopitas.com</li>
+                <li class="datos__item"><span class="datos__span">🌎</span>Bogotá, Colombia</li>
+                <li class="datos__item"><a class="datos__link" href="termCond" target="_blank">Terminos y condiciones</a></li>
+            </ul>
+        </div>
+        <p class="footer__copyright">© 2026 Piopitas Restaurantes. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
