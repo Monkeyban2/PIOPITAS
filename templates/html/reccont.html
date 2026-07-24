@@ -55,6 +55,11 @@
             </div>
 
             <div class="main__container-form">
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="mensaje-error">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
                 {% if form.errors %}
                     <ul class="mensaje-error">
                         {% for campo in form %}

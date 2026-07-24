@@ -1,16 +1,21 @@
 import json
+import logging
 from decimal import Decimal
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import transaction
 from django.db.models import ProtectedError
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 
 from .forms import ActualizarStockForm, ProductoForm, RegistroClienteForm
 from .models import Categoria, ItemPedido, Pedido, Producto
+
+logger = logging.getLogger(__name__)
 
 
 def inicio(request):
@@ -68,6 +73,24 @@ def registro(request):
 def cerrar_sesion(request):
     logout(request)
     return redirect('inicio')
+
+
+class RecuperarContrasenaView(auth_views.PasswordResetView):
+    template_name = 'html/reccont.html'
+    email_template_name = 'registration/password_reset_email.html'
+    subject_template_name = 'registration/password_reset_subject.txt'
+    success_url = reverse_lazy('password_reset_done')
+
+    def form_valid(self, form):
+        try:
+            return super().form_valid(form)
+        except Exception:
+            logger.exception('Error enviando el correo de recuperación de contraseña')
+            messages.error(
+                self.request,
+                'No pudimos enviar el correo en este momento. Intenta de nuevo en unos minutos.',
+            )
+            return redirect('recuperar')
 
 
 def es_administrador(usuario):

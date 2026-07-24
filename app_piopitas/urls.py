@@ -14,12 +14,7 @@ urlpatterns = [
     path('termCond', views.tc, name='termCond'),
     path('logout', views.cerrar_sesion, name='logout'),
 
-    path('recContr', auth_views.PasswordResetView.as_view(
-        template_name='html/reccont.html',
-        email_template_name='registration/password_reset_email.html',
-        subject_template_name='registration/password_reset_subject.txt',
-        success_url=reverse_lazy('password_reset_done'),
-    ), name='recuperar'),
+    path('recContr', views.RecuperarContrasenaView.as_view(), name='recuperar'),
     path('recContr/enviado', auth_views.PasswordResetDoneView.as_view(
         template_name='registration/password_reset_done.html',
     ), name='password_reset_done'),
