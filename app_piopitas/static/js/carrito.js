@@ -12,6 +12,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let carrito = [];
 
+    function obtenerContenedorNotificaciones() {
+        let contenedor = document.querySelector('#notificaciones');
+        if (!contenedor) {
+            contenedor = document.createElement('div');
+            contenedor.id = 'notificaciones';
+            document.body.appendChild(contenedor);
+        }
+        return contenedor;
+    }
+
+    function mostrarNotificacion(mensaje, tipo = 'info', duracion = 3200) {
+        const contenedor = obtenerContenedorNotificaciones();
+
+        const aviso = document.createElement('div');
+        aviso.className = `notificacion notificacion--${tipo}`;
+        aviso.textContent = mensaje;
+
+        contenedor.appendChild(aviso);
+
+        requestAnimationFrame(() => aviso.classList.add('notificacion--visible'));
+
+        setTimeout(() => {
+            aviso.classList.remove('notificacion--visible');
+            aviso.addEventListener('transitionend', () => aviso.remove(), { once: true });
+        }, duracion);
+
+        return new Promise((resolve) => setTimeout(resolve, Math.min(duracion, 1400)));
+    }
+
     function agregarAlCarrito(e) {
         const boton = e.target;
 
@@ -94,12 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function procesarPedido() {
         if (carrito.length === 0) {
-            alert('Tu carrito está vacío.');
+            mostrarNotificacion('Tu carrito está vacío.', 'error');
             return;
         }
 
         if (!estaLogueado) {
-            alert('Debes iniciar sesión para poder pagar tu pedido.');
+            await mostrarNotificacion('Debes iniciar sesión para poder pagar tu pedido.', 'info');
             window.location.href = urlLogin || 'inicioS';
             return;
         }
@@ -122,15 +151,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await respuesta.json();
 
             if (respuesta.ok && data.ok) {
-                alert(`¡Gracias por tu orden! Tu pedido #${data.pedido_id} fue registrado.`);
+                await mostrarNotificacion(`¡Gracias por tu orden! Tu pedido #${data.pedido_id} fue registrado.`, 'exito');
                 carrito = [];
                 actualizarCarritoHTML();
                 window.location.reload();
             } else {
-                alert(data.error || 'No se pudo procesar el pedido. Intenta de nuevo.');
+                mostrarNotificacion(data.error || 'No se pudo procesar el pedido. Intenta de nuevo.', 'error');
             }
         } catch (error) {
-            alert('Ocurrió un error al conectar con el servidor. Intenta de nuevo.');
+            mostrarNotificacion('Ocurrió un error al conectar con el servidor. Intenta de nuevo.', 'error');
         } finally {
             botonCheckout.disabled = false;
             botonCheckout.textContent = 'Proceder al pago';

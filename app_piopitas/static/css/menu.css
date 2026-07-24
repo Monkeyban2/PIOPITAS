@@ -322,3 +322,45 @@
     background: #f5f5f5;
 }
 /*CARRITO END*/
+
+#notificaciones{
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    align-items: center;
+    width: 100%;
+    padding: 0 1rem;
+    pointer-events: none;
+}
+.notificacion{
+    font-family: var(--font-text);
+    background: white;
+    color: var(--texto-oscuro);
+    padding: .9rem 1.4rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+    border-left: 5px solid var(--dorado-elegante);
+    max-width: 420px;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(-16px);
+    transition: opacity .25s ease, transform .25s ease;
+}
+.notificacion--visible{
+    opacity: 1;
+    transform: translateY(0);
+}
+.notificacion--exito{
+    border-left-color: #2e7d32;
+}
+.notificacion--error{
+    border-left-color: #c62828;
+}
+.notificacion--info{
+    border-left-color: #ff7a00;
+}
